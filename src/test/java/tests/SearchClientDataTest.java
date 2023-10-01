@@ -34,6 +34,7 @@ public class SearchClientDataTest extends BaseStep {
     @Step("Подготовка старта драйвера, переход на страницу")
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
         options.addArguments("--start-maximized");
         driver = new ChromeDriver(options);
         waitRunBeforeStart(driver, 3);
