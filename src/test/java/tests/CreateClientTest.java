@@ -194,7 +194,7 @@ public class CreateClientTest extends BaseStep {
         waitElement(driver, customersPage.getFirstNameTableTitle());
         assertAll(
                 () -> checkField(getActualPageUrl(driver), CUSTOMER_PAGE_URL),
-                () -> checkIsValueInList(customersPage.getFirstNameList(), LAST_NAME),
+                () -> checkIsValueInList(customersPage.getFirstNameList(), FIRST_NAME),
                 () -> checkIsValueInList(customersPage.getLastNameList(), LAST_NAME),
                 () -> checkIsValueInList(customersPage.getPostCodeList(), POST_CODE),
                 () -> checkIsValueInList(customersPage.getAccountNumberList(), TEST_ACCOUNT));
