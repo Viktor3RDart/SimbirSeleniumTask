@@ -48,11 +48,11 @@ public class CreateClientTest extends BaseStep {
     public void addCustomerFieldsVisabilityTest() {
         AddCustomerPage customerPage = new AddCustomerPage(driver);
         HomePageButtons homePage = new HomePageButtons(driver);
-        clickElement(homePage.getAddCustomerButton());
+        clickElement(homePage.addCustomerButton);
         assertAll(
-                () -> checkVisibility(customerPage.getFirstNameField()),
-                () -> checkVisibility(customerPage.getLastNameField()),
-                () -> checkVisibility(customerPage.getPostCodeField()));
+                () -> checkVisibility(customerPage.firstNameField),
+                () -> checkVisibility(customerPage.lastNameField),
+                () -> checkVisibility(customerPage.postCodeField));
     }
 
     @Test
@@ -62,8 +62,8 @@ public class CreateClientTest extends BaseStep {
     public void addCustomerButtonVisabilityTest() {
         AddCustomerPage customerPage = new AddCustomerPage(driver);
         HomePageButtons homePage = new HomePageButtons(driver);
-        clickElement(homePage.getAddCustomerButton());
-        assertAll(() -> checkVisibility(customerPage.getAddCustomerButton()));
+        clickElement(homePage.addCustomerButton);
+        checkVisibility(customerPage.addCustomerButton);
     }
 
     @Test
@@ -74,17 +74,17 @@ public class CreateClientTest extends BaseStep {
         AddCustomerPage addCustomerPage = new AddCustomerPage(driver);
         HomePageButtons homePage = new HomePageButtons(driver);
         CustomersPage customersPage = new CustomersPage(driver);
-        clickElement(homePage.getAddCustomerButton());
+        clickElement(homePage.addCustomerButton);
         addCustomerPage.createClient();
-        assertAll(() -> checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT));
+        checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT);
         alertMessageClose(driver);
-        clickElement(homePage.getCustomersButton());
-        waitElement(driver, customersPage.getFirstNameTableTitle());
+        clickElement(homePage.customersButton);
+        waitElement(driver, customersPage.firstNameTableTitle);
         assertAll(
                 () -> checkField(getActualPageUrl(driver), CUSTOMER_PAGE_URL),
-                () -> checkIsValueInList(customersPage.getFirstNameList(), FIRST_NAME),
-                () -> checkIsValueInList(customersPage.getLastNameList(), LAST_NAME),
-                () -> checkIsValueInList(customersPage.getPostCodeList(), POST_CODE));
+                () -> checkIsValueInList(customersPage.firstNameList, FIRST_NAME),
+                () -> checkIsValueInList(customersPage.lastNameList, LAST_NAME),
+                () -> checkIsValueInList(customersPage.postCodeList, POST_CODE));
     }
 
     @Test
@@ -95,17 +95,17 @@ public class CreateClientTest extends BaseStep {
         AddCustomerPage addCustomerPage = new AddCustomerPage(driver);
         HomePageButtons homePage = new HomePageButtons(driver);
         CustomersPage customersPage = new CustomersPage(driver);
-        clickElement(homePage.getAddCustomerButton());
-        sendKeys(addCustomerPage.getLastNameField(), LAST_NAME);
-        sendKeys(addCustomerPage.getPostCodeField(), POST_CODE);
-        clickElement(addCustomerPage.getAddCustomerButton());
-        assertAll(() -> checkField(alertMessageIsNotDisplayed(driver), CUSTOMER_PAGE_DO_NOT_HAVE_ALERT_MESSAGE));
-        clickElement(homePage.getCustomersButton());
-        waitElement(driver, customersPage.getFirstNameTableTitle());
+        clickElement(homePage.addCustomerButton);
+        sendKeys(addCustomerPage.lastNameField, LAST_NAME);
+        sendKeys(addCustomerPage.postCodeField, POST_CODE);
+        clickElement(addCustomerPage.addCustomerButton);
+        checkField(alertMessageIsNotDisplayed(driver), CUSTOMER_PAGE_DO_NOT_HAVE_ALERT_MESSAGE);
+        clickElement(homePage.customersButton);
+        waitElement(driver, customersPage.firstNameTableTitle);
         assertAll(
                 () -> checkField(getActualPageUrl(driver), CUSTOMER_PAGE_URL),
-                () -> checkIsValueInList(customersPage.getLastNameList(), NULL_TEST_DATA),
-                () -> checkIsValueInList(customersPage.getPostCodeList(), NULL_TEST_DATA));
+                () -> checkIsValueInList(customersPage.lastNameList, NULL_TEST_DATA),
+                () -> checkIsValueInList(customersPage.postCodeList, NULL_TEST_DATA));
     }
 
     @Test
@@ -116,17 +116,17 @@ public class CreateClientTest extends BaseStep {
         AddCustomerPage addCustomerPage = new AddCustomerPage(driver);
         HomePageButtons homePage = new HomePageButtons(driver);
         CustomersPage customersPage = new CustomersPage(driver);
-        clickElement(homePage.getAddCustomerButton());
-        sendKeys(addCustomerPage.getFirstNameField(), FIRST_NAME);
-        sendKeys(addCustomerPage.getPostCodeField(), POST_CODE);
-        clickElement(addCustomerPage.getAddCustomerButton());
-        assertAll(() -> checkField(alertMessageIsNotDisplayed(driver), CUSTOMER_PAGE_DO_NOT_HAVE_ALERT_MESSAGE));
-        clickElement(homePage.getCustomersButton());
-        waitElement(driver, customersPage.getFirstNameTableTitle());
+        clickElement(homePage.addCustomerButton);
+        sendKeys(addCustomerPage.firstNameField, FIRST_NAME);
+        sendKeys(addCustomerPage.postCodeField, POST_CODE);
+        clickElement(addCustomerPage.addCustomerButton);
+        checkField(alertMessageIsNotDisplayed(driver), CUSTOMER_PAGE_DO_NOT_HAVE_ALERT_MESSAGE);
+        clickElement(homePage.customersButton);
+        waitElement(driver, customersPage.firstNameTableTitle);
         assertAll(
                 () -> checkField(getActualPageUrl(driver), CUSTOMER_PAGE_URL),
-                () -> checkIsValueInList(customersPage.getFirstNameList(), NULL_TEST_DATA),
-                () -> checkIsValueInList(customersPage.getPostCodeList(), NULL_TEST_DATA));
+                () -> checkIsValueInList(customersPage.firstNameList, NULL_TEST_DATA),
+                () -> checkIsValueInList(customersPage.postCodeList, NULL_TEST_DATA));
     }
 
     @Test
@@ -137,17 +137,17 @@ public class CreateClientTest extends BaseStep {
         AddCustomerPage addCustomerPage = new AddCustomerPage(driver);
         HomePageButtons homePage = new HomePageButtons(driver);
         CustomersPage customersPage = new CustomersPage(driver);
-        clickElement(homePage.getAddCustomerButton());
-        sendKeys(addCustomerPage.getFirstNameField(), FIRST_NAME);
-        sendKeys(addCustomerPage.getLastNameField(), LAST_NAME);
-        clickElement(addCustomerPage.getAddCustomerButton());
-        assertAll(() -> checkField(alertMessageIsNotDisplayed(driver), CUSTOMER_PAGE_DO_NOT_HAVE_ALERT_MESSAGE));
-        clickElement(homePage.getCustomersButton());
-        waitElement(driver, customersPage.getFirstNameTableTitle());
+        clickElement(homePage.addCustomerButton);
+        sendKeys(addCustomerPage.firstNameField, FIRST_NAME);
+        sendKeys(addCustomerPage.lastNameField, LAST_NAME);
+        clickElement(addCustomerPage.addCustomerButton);
+        checkField(alertMessageIsNotDisplayed(driver), CUSTOMER_PAGE_DO_NOT_HAVE_ALERT_MESSAGE);
+        clickElement(homePage.customersButton);
+        waitElement(driver, customersPage.firstNameTableTitle);
         assertAll(
                 () -> checkField(getActualPageUrl(driver), CUSTOMER_PAGE_URL),
-                () -> checkIsValueInList(customersPage.getFirstNameList(), NULL_TEST_DATA),
-                () -> checkIsValueInList(customersPage.getLastNameList(), NULL_TEST_DATA));
+                () -> checkIsValueInList(customersPage.firstNameList, NULL_TEST_DATA),
+                () -> checkIsValueInList(customersPage.lastNameList, NULL_TEST_DATA));
     }
 
     @Test
@@ -157,10 +157,10 @@ public class CreateClientTest extends BaseStep {
     public void openAccountFieldsVisabilityTest() {
         OpenAccountPage accountPage = new OpenAccountPage(driver);
         HomePageButtons homePage = new HomePageButtons(driver);
-        clickElement(homePage.getOpenAccountButton());
+        clickElement(homePage.openAccountButton);
         assertAll(
-                () -> checkVisibility(accountPage.getCurrencyField()),
-                () -> checkVisibility(accountPage.getCustomerNameField()));
+                () -> checkVisibility(accountPage.currencyField),
+                () -> checkVisibility(accountPage.customerNameField));
     }
 
     @Test
@@ -170,8 +170,8 @@ public class CreateClientTest extends BaseStep {
     public void openAccountButtonVisabilityTest() {
         OpenAccountPage accountPage = new OpenAccountPage(driver);
         HomePageButtons homePage = new HomePageButtons(driver);
-        clickElement(homePage.getOpenAccountButton());
-        assertAll(() -> checkVisibility(accountPage.getProcessButton()));
+        clickElement(homePage.openAccountButton);
+        checkVisibility(accountPage.processButton);
     }
 
     @Test
@@ -183,25 +183,24 @@ public class CreateClientTest extends BaseStep {
         HomePageButtons homePage = new HomePageButtons(driver);
         CustomersPage customersPage = new CustomersPage(driver);
         OpenAccountPage accountPage = new OpenAccountPage(driver);
-        clickElement(homePage.getAddCustomerButton());
+        clickElement(homePage.addCustomerButton);
         addCustomerPage.createClient();
-        assertAll(() -> checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT));
+        checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT);
         alertMessageClose(driver);
-        clickElement(homePage.getOpenAccountButton());
-        assertAll(() -> checkVisibility(accountPage.getCustomerNameField()));
+        clickElement(homePage.openAccountButton);
+        checkVisibility(accountPage.customerNameField);
         accountPage.openAccountForClient();
-        assertAll(() -> checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT));
+        checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT);
         alertMessageClose(driver);
-        clickElement(homePage.getCustomersButton());
-        waitElement(driver, customersPage.getFirstNameTableTitle());
+        clickElement(homePage.customersButton);
+        waitElement(driver, customersPage.firstNameTableTitle);
         assertAll(
                 () -> checkField(getActualPageUrl(driver), CUSTOMER_PAGE_URL),
-                () -> checkIsValueInList(customersPage.getFirstNameList(), FIRST_NAME),
-                () -> checkIsValueInList(customersPage.getLastNameList(), LAST_NAME),
-                () -> checkIsValueInList(customersPage.getPostCodeList(), POST_CODE),
-                () -> checkIsValueInList(customersPage.getAccountNumberList(), TEST_ACCOUNT));
+                () -> checkIsValueInList(customersPage.firstNameList, FIRST_NAME),
+                () -> checkIsValueInList(customersPage.lastNameList, LAST_NAME),
+                () -> checkIsValueInList(customersPage.postCodeList, POST_CODE),
+                () -> checkIsValueInList(customersPage.accountNumberList, TEST_ACCOUNT));
     }
-
 
     @Test
     @DisplayName("Тест №22 - Создание двух идентичных клиентов")
@@ -210,10 +209,10 @@ public class CreateClientTest extends BaseStep {
     public void createIdenticalClientsTest() {
         AddCustomerPage addCustomerPage = new AddCustomerPage(driver);
         HomePageButtons homePage = new HomePageButtons(driver);
-        clickElement(homePage.getAddCustomerButton());
+        clickElement(homePage.addCustomerButton);
         addCustomerPage.createClient();
         addCustomerPage.createClient();
-        assertAll(() -> checkField(alertMessageText(driver), CUSTOMER_PAGE_DUPLICATES_ALERT_MESSAGE_TEXT));
+        checkField(alertMessageText(driver), CUSTOMER_PAGE_DUPLICATES_ALERT_MESSAGE_TEXT);
     }
 
     @AfterEach

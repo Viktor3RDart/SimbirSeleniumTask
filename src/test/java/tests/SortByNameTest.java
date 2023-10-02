@@ -45,13 +45,13 @@ public class SortByNameTest extends BaseStep {
     public void customersTabVisabilityTest() {
         CustomersPage customersPage = new CustomersPage(driver);
         HomePageButtons homePage = new HomePageButtons(driver);
-        clickElement(homePage.getCustomersButton());
+        clickElement(homePage.customersButton);
         assertAll(
-                () -> checkVisibility(customersPage.getFirstNameTableTitle()),
-                () -> checkVisibility(customersPage.getLastNameTableTitle()),
-                () -> checkVisibility(customersPage.getPostCodeTableTitle()),
-                () -> checkVisibility(customersPage.getAccountNumberTableTitle()),
-                () -> checkVisibility(customersPage.getDeleteCustomerTableTitle()));
+                () -> checkVisibility(customersPage.firstNameTableTitle),
+                () -> checkVisibility(customersPage.lastNameTableTitle),
+                () -> checkVisibility(customersPage.postCodeTableTitle),
+                () -> checkVisibility(customersPage.accountNumberTableTitle),
+                () -> checkVisibility(customersPage.deleteCustomerTableTitle));
     }
 
     @Test
@@ -61,10 +61,10 @@ public class SortByNameTest extends BaseStep {
     public void sortCustomersByNameLastToFirstTest() {
         CustomersPage customersPage = new CustomersPage(driver);
         HomePageButtons homePage = new HomePageButtons(driver);
-        clickElement(homePage.getCustomersButton());
-        clickElement(customersPage.getFirstNameTableTitle());
-        checkField(giveListOf(customersPage.getFirstNameList()),
-                customersPage.sortListReverseOrder(giveListOf(customersPage.getFirstNameList())));
+        clickElement(homePage.customersButton);
+        clickElement(customersPage.firstNameTableTitle);
+        checkField(giveListOf(customersPage.firstNameList),
+                customersPage.sortListReverseOrder(giveListOf(customersPage.firstNameList)));
     }
 
     @Test
@@ -74,11 +74,11 @@ public class SortByNameTest extends BaseStep {
     public void sortCustomersByNameFirstToLastTest() {
         CustomersPage customersPage = new CustomersPage(driver);
         HomePageButtons homePage = new HomePageButtons(driver);
-        clickElement(homePage.getCustomersButton());
-        clickElement(customersPage.getFirstNameTableTitle());
-        clickElement(customersPage.getFirstNameTableTitle());
-        checkField(giveListOf(customersPage.getFirstNameList()),
-                customersPage.sortListNaturalOrder(giveListOf(customersPage.getFirstNameList())));
+        clickElement(homePage.customersButton);
+        clickElement(customersPage.firstNameTableTitle);
+        clickElement(customersPage.firstNameTableTitle);
+        checkField(giveListOf(customersPage.firstNameList),
+                customersPage.sortListNaturalOrder(giveListOf(customersPage.firstNameList)));
     }
 
     @AfterEach

@@ -46,9 +46,9 @@ public class MainPageTest extends BaseStep {
     public void buttonVisabilityTest() {
         HomePageButtons homePage = new HomePageButtons(driver);
         assertAll(
-                () -> checkVisibility(homePage.getAddCustomerButton()),
-                () -> checkVisibility(homePage.getAddCustomerButton()),
-                () -> checkVisibility(homePage.getAddCustomerButton()));
+                () -> checkVisibility(homePage.addCustomerButton),
+                () -> checkVisibility(homePage.openAccountButton),
+                () -> checkVisibility(homePage.customersButton));
     }
 
     @Test
@@ -59,10 +59,9 @@ public class MainPageTest extends BaseStep {
     public void goOnAddCustomerTest() {
         HomePageButtons homePage = new HomePageButtons(driver);
         AddCustomerPage customerPage = new AddCustomerPage(driver);
-        clickElement(homePage.getAddCustomerButton());
-        assertAll(
-                () -> checkVisibility(customerPage.getFirstNameField()),
-                () -> checkField(getActualPageUrl(driver), ADD_CUSTOMER_PAGE_URL));
+        clickElement(homePage.addCustomerButton);
+        waitElement(driver, customerPage.firstNameField);
+        checkField(getActualPageUrl(driver), ADD_CUSTOMER_PAGE_URL);
     }
 
     @Test
@@ -73,10 +72,9 @@ public class MainPageTest extends BaseStep {
     public void goOnOpenAccountTest() {
         HomePageButtons homePage = new HomePageButtons(driver);
         OpenAccountPage accountPage = new OpenAccountPage(driver);
-        clickElement(homePage.getOpenAccountButton());
-        assertAll(
-                () -> checkVisibility(accountPage.getCustomerNameField()),
-                () -> checkField(getActualPageUrl(driver), OPEN_ACCOUNT_PAGE_URL));
+        clickElement(homePage.openAccountButton);
+        waitElement(driver, accountPage.customerNameField);
+        checkField(getActualPageUrl(driver), OPEN_ACCOUNT_PAGE_URL);
     }
 
     @Test
@@ -87,10 +85,9 @@ public class MainPageTest extends BaseStep {
     public void goOnCustomersTest() {
         HomePageButtons homePage = new HomePageButtons(driver);
         CustomersPage customersPage = new CustomersPage(driver);
-        clickElement(homePage.getCustomersButton());
-        assertAll(
-                () -> checkVisibility(customersPage.getFirstNameTableTitle()),
-                () -> checkField(getActualPageUrl(driver), CUSTOMER_PAGE_URL));
+        clickElement(homePage.customersButton);
+        waitElement(driver, customersPage.firstNameTableTitle);
+        checkField(getActualPageUrl(driver), CUSTOMER_PAGE_URL);
     }
 
     @AfterEach

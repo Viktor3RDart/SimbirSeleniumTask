@@ -14,22 +14,22 @@ import static helpers.TestData.*;
 
 public class OpenAccountPage extends BaseStep {
 
-    private final WebDriver driver;
+    WebDriver driver;
 
     @FindBy(id = "userSelect")
-    private WebElement customerNameField;
+    public WebElement customerNameField;
 
     @FindBy(id = "currency")
-    private WebElement currencyField;
+    public WebElement currencyField;
 
     @FindBy(css = "button[type=\"submit\"]")
-    private WebElement processButton;
+    public WebElement processButton;
 
     @FindBy(xpath = "//*[@id=\"userSelect\"]/option")
-    private List<WebElement> customersList;
+    public List<WebElement> customersList;
 
     @FindBy(xpath = "//*[@id=\"currency\"]/option")
-    private List<WebElement> currencyList;
+    public List<WebElement> currencyList;
 
 
     public OpenAccountPage(WebDriver driver) {
@@ -44,7 +44,7 @@ public class OpenAccountPage extends BaseStep {
         ) {
             if (element.getText().equals(data)) {
                 element.click();
-                homePage.getOpenAccountButton().click();
+                homePage.openAccountButton.click();
             }
         }
     }
@@ -55,40 +55,4 @@ public class OpenAccountPage extends BaseStep {
         selectSomeDataInField(currencyList, CURRENCY);
         clickElement(processButton);
     }
-
-    public WebDriver getDriver() {
-        return driver;
-    }
-
-    public WebElement getCustomerNameField() {
-        return customerNameField;
-    }
-
-    public void setCustomerNameField(WebElement customerNameField) {
-        this.customerNameField = customerNameField;
-    }
-
-    public WebElement getCurrencyField() {
-        return currencyField;
-    }
-
-    public void setCurrencyField(WebElement currencyField) {
-        this.currencyField = currencyField;
-    }
-
-    public WebElement getProcessButton() {
-        return processButton;
-    }
-
-    public void setProcessButton(WebElement processButton) {
-        this.processButton = processButton;
-    }
-
-    public List<WebElement> getCustomersList() { return customersList; }
-
-    public List<WebElement> getCurrencyList() { return currencyList; }
-
-    public void setCustomersList(List<WebElement> customersList) { this.customersList = customersList; }
-
-    public void setCurrencyList(List<WebElement> currencyList) { this.currencyList = currencyList; }
 }

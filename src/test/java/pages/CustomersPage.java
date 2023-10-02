@@ -11,37 +11,37 @@ import java.util.*;
 
 public class CustomersPage extends BaseStep {
 
-    private final WebDriver driver;
+    WebDriver driver;
 
     @FindBy(css = "a[ng-click=\"sortType = 'fName'; sortReverse = !sortReverse\"]")
-    private WebElement firstNameTableTitle;
+    public WebElement firstNameTableTitle;
 
     @FindBy(css = "a[ng-click=\"sortType = 'lName'; sortReverse = !sortReverse\"]")
-    private WebElement lastNameTableTitle;
+    public WebElement lastNameTableTitle;
 
     @FindBy(css = "a[ng-click=\"sortType = 'postCd'; sortReverse = !sortReverse\"]")
-    private WebElement postCodeTableTitle;
+    public WebElement postCodeTableTitle;
 
     @FindBy(xpath = "//*[contains(text(), \"Account Number\")]")
-    private WebElement accountNumberTableTitle;
+    public WebElement accountNumberTableTitle;
 
     @FindBy(xpath = "//*[contains(text(), \"Delete Customer\")]")
-    private WebElement deleteCustomerTableTitle;
+    public WebElement deleteCustomerTableTitle;
 
     @FindBy(css = "input[ng-model=\"searchCustomer\"] ")
-    private WebElement searchCustomerField;
+    public WebElement searchCustomerField;
 
     @FindBy(css = "td:nth-child(1)")
-    private List<WebElement> firstNameList;
+    public List<WebElement> firstNameList;
 
     @FindBy(css = "td:nth-child(2)")
-    private List<WebElement> lastNameList;
+    public List<WebElement> lastNameList;
 
     @FindBy(css = "td:nth-child(3)")
-    private List<WebElement> postCodeList;
+    public List<WebElement> postCodeList;
 
     @FindBy(css = "td:nth-child(4)")
-    private List<WebElement> accountNumberList;
+    public List<WebElement> accountNumberList;
 
     public CustomersPage(WebDriver driver) {
         this.driver = driver;
@@ -58,89 +58,5 @@ public class CustomersPage extends BaseStep {
     public ArrayList<String> sortListReverseOrder(ArrayList<String> list) {
         list.sort(Comparator.reverseOrder());
         return new ArrayList<>(list);
-    }
-
-    public WebDriver getDriver() {
-        return driver;
-    }
-
-    public WebElement getFirstNameTableTitle() {
-        return firstNameTableTitle;
-    }
-
-    public void setFirstNameTableTitle(WebElement firstNameTableTitle) {
-        this.firstNameTableTitle = firstNameTableTitle;
-    }
-
-    public WebElement getLastNameTableTitle() {
-        return lastNameTableTitle;
-    }
-
-    public void setLastNameTableTitle(WebElement lastNameTableTitle) {
-        this.lastNameTableTitle = lastNameTableTitle;
-    }
-
-    public WebElement getPostCodeTableTitle() {
-        return postCodeTableTitle;
-    }
-
-    public void setPostCodeTableTitle(WebElement postCodeTableTitle) {
-        this.postCodeTableTitle = postCodeTableTitle;
-    }
-
-    public WebElement getAccountNumberTableTitle() {
-        return accountNumberTableTitle;
-    }
-
-    public void setAccountNumberTableTitle(WebElement accountNumberTableTitle) {
-        this.accountNumberTableTitle = accountNumberTableTitle;
-    }
-
-    public WebElement getDeleteCustomerTableTitle() {
-        return deleteCustomerTableTitle;
-    }
-
-    public void setDeleteCustomerTableTitle(WebElement deleteCustomerTableTitle) {
-        this.deleteCustomerTableTitle = deleteCustomerTableTitle;
-    }
-
-    public WebElement getSearchCustomerField() {
-        return searchCustomerField;
-    }
-
-    public void setSearchCustomerField(WebElement searchCustomerField) {
-        this.searchCustomerField = searchCustomerField;
-    }
-
-    public List<WebElement> getFirstNameList() {
-        return firstNameList;
-    }
-
-    public void setFirstNameList(List<WebElement> firstNameList) {
-        this.firstNameList = firstNameList;
-    }
-
-    public List<WebElement> getLastNameList() {
-        return lastNameList;
-    }
-
-    public void setLastNameList(List<WebElement> lastNameList) {
-        this.lastNameList = lastNameList;
-    }
-
-    public List<WebElement> getPostCodeList() {
-        return postCodeList;
-    }
-
-    public void setPostCodeList(List<WebElement> postCodeList) {
-        this.postCodeList = postCodeList;
-    }
-
-    public List<WebElement> getAccountNumberList() {
-        return accountNumberList;
-    }
-
-    public void setAccountNumberList(List<WebElement> accountNumberList) {
-        this.accountNumberList = accountNumberList;
     }
 }

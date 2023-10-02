@@ -49,8 +49,8 @@ public class SearchClientDataTest extends BaseStep {
     public void customersSearchFieldVisabilityTest() {
         CustomersPage customersPage = new CustomersPage(driver);
         HomePageButtons homePage = new HomePageButtons(driver);
-        clickElement(homePage.getCustomersButton());
-        assertAll(() -> checkVisibility(customersPage.getSearchCustomerField()));
+        clickElement(homePage.customersButton);
+        checkVisibility(customersPage.searchCustomerField);
     }
 
     @Test
@@ -63,22 +63,22 @@ public class SearchClientDataTest extends BaseStep {
         CustomersPage customersPage = new CustomersPage(driver);
         OpenAccountPage accountPage = new OpenAccountPage(driver);
         // Сначала создается клиент, данные по которому далее будем искать.
-        clickElement(homePage.getAddCustomerButton());
+        clickElement(homePage.addCustomerButton);
         addCustomerPage.createClient();
-        assertAll(() -> checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT));
+        checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT);
         alertMessageClose(driver);
-        clickElement(homePage.getOpenAccountButton());
-        assertAll(() -> checkVisibility(accountPage.getCustomerNameField()));
+        clickElement(homePage.openAccountButton);
+        checkVisibility(accountPage.customerNameField);
         accountPage.openAccountForClient();
-        assertAll(() -> checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT));
+        checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT);
         alertMessageClose(driver);
         // Далее ищем данные по клиенту
-        clickElement(homePage.getCustomersButton());
-        waitElement(driver, customersPage.getSearchCustomerField());
-        sendKeys(customersPage.getSearchCustomerField(), FIRST_NAME);
+        clickElement(homePage.customersButton);
+        waitElement(driver, customersPage.searchCustomerField);
+        sendKeys(customersPage.searchCustomerField, FIRST_NAME);
         assertAll(
                 () -> checkField(getActualPageUrl(driver), CUSTOMER_PAGE_URL),
-                () -> checkSearchValueInList(customersPage.getFirstNameList(), FIRST_NAME));
+                () -> checkSearchValueInList(customersPage.firstNameList, FIRST_NAME));
     }
 
     @Test
@@ -91,22 +91,22 @@ public class SearchClientDataTest extends BaseStep {
         CustomersPage customersPage = new CustomersPage(driver);
         OpenAccountPage accountPage = new OpenAccountPage(driver);
         // Сначала создается клиент, данные по которому далее будем искать.
-        clickElement(homePage.getAddCustomerButton());
+        clickElement(homePage.addCustomerButton);
         addCustomerPage.createClient();
-        assertAll(() -> checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT));
+        checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT);
         alertMessageClose(driver);
-        clickElement(homePage.getOpenAccountButton());
-        assertAll(() -> checkVisibility(accountPage.getCustomerNameField()));
+        clickElement(homePage.openAccountButton);
+        checkVisibility(accountPage.customerNameField);
         accountPage.openAccountForClient();
-        assertAll(() -> checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT));
+        checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT);
         alertMessageClose(driver);
         // Далее ищем данные по клиенту
-        clickElement(homePage.getCustomersButton());
-        waitElement(driver, customersPage.getSearchCustomerField());
-        sendKeys(customersPage.getSearchCustomerField(), LAST_NAME);
+        clickElement(homePage.customersButton);
+        waitElement(driver, customersPage.searchCustomerField);
+        sendKeys(customersPage.searchCustomerField, LAST_NAME);
         assertAll(
                 () -> checkField(getActualPageUrl(driver), CUSTOMER_PAGE_URL),
-                () -> checkSearchValueInList(customersPage.getLastNameList(), LAST_NAME));
+                () -> checkSearchValueInList(customersPage.lastNameList, LAST_NAME));
     }
 
     @Test
@@ -119,22 +119,22 @@ public class SearchClientDataTest extends BaseStep {
         CustomersPage customersPage = new CustomersPage(driver);
         OpenAccountPage accountPage = new OpenAccountPage(driver);
         // Сначала создается клиент, данные по которому далее будем искать.
-        clickElement(homePage.getAddCustomerButton());
+        clickElement(homePage.addCustomerButton);
         addCustomerPage.createClient();
-        assertAll(() -> checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT));
+        checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT);
         alertMessageClose(driver);
-        clickElement(homePage.getOpenAccountButton());
-        assertAll(() -> checkVisibility(accountPage.getCustomerNameField()));
+        clickElement(homePage.openAccountButton);
+        checkVisibility(accountPage.customerNameField);
         accountPage.openAccountForClient();
-        assertAll(() -> checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT));
+        checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT);
         alertMessageClose(driver);
         // Далее ищем данные по клиенту
-        clickElement(homePage.getCustomersButton());
-        waitElement(driver, customersPage.getSearchCustomerField());
-        sendKeys(customersPage.getSearchCustomerField(), POST_CODE);
+        clickElement(homePage.customersButton);
+        waitElement(driver, customersPage.searchCustomerField);
+        sendKeys(customersPage.searchCustomerField, POST_CODE);
         assertAll(
                 () -> checkField(getActualPageUrl(driver), CUSTOMER_PAGE_URL),
-                () -> checkSearchValueInList(customersPage.getPostCodeList(), POST_CODE));
+                () -> checkSearchValueInList(customersPage.postCodeList, POST_CODE));
     }
 
     @Test
@@ -147,22 +147,22 @@ public class SearchClientDataTest extends BaseStep {
         CustomersPage customersPage = new CustomersPage(driver);
         OpenAccountPage accountPage = new OpenAccountPage(driver);
         // Сначала создается клиент, данные по которому далее будем искать.
-        clickElement(homePage.getAddCustomerButton());
+        clickElement(homePage.addCustomerButton);
         addCustomerPage.createClient();
-        assertAll(() -> checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT));
+        checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT);
         alertMessageClose(driver);
-        clickElement(homePage.getOpenAccountButton());
-        assertAll(() -> checkVisibility(accountPage.getCustomerNameField()));
+        clickElement(homePage.openAccountButton);
+        checkVisibility(accountPage.customerNameField);
         accountPage.openAccountForClient();
-        assertAll(() -> checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT));
+        checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT);
         alertMessageClose(driver);
         // Далее ищем данные по клиенту
-        clickElement(homePage.getCustomersButton());
-        waitElement(driver, customersPage.getSearchCustomerField());
-        sendKeys(customersPage.getSearchCustomerField(), TEST_ACCOUNT);
+        clickElement(homePage.customersButton);
+        waitElement(driver, customersPage.searchCustomerField);
+        sendKeys(customersPage.searchCustomerField, TEST_ACCOUNT);
         assertAll(
                 () -> checkField(getActualPageUrl(driver), CUSTOMER_PAGE_URL),
-                () -> checkSearchValueInList(customersPage.getAccountNumberList(), TEST_ACCOUNT));
+                () -> checkSearchValueInList(customersPage.accountNumberList, TEST_ACCOUNT));
     }
 
     @AfterEach

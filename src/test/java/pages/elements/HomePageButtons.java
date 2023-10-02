@@ -7,48 +7,19 @@ import org.openqa.selenium.support.PageFactory;
 
 public class HomePageButtons {
 
-    private final WebDriver driver;
+    WebDriver driver;
 
     @FindBy(css = "button[ng-click=\"addCust()\"]")
-    private WebElement addCustomerButton;
+    public WebElement addCustomerButton;
 
     @FindBy(css = "button[ng-click=\"openAccount()\"]")
-    private WebElement openAccountButton;
+    public WebElement openAccountButton;
 
     @FindBy(css = "button[ng-click=\"showCust()\"]")
-    private WebElement customersButton;
-
+    public WebElement customersButton;
 
     public HomePageButtons(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
-    }
-
-    public WebDriver getDriver() {
-        return driver;
-    }
-
-    public WebElement getAddCustomerButton() {
-        return addCustomerButton;
-    }
-
-    public void setAddCustomerButton(WebElement addCustomerButton) {
-        this.addCustomerButton = addCustomerButton;
-    }
-
-    public WebElement getOpenAccountButton() {
-        return openAccountButton;
-    }
-
-    public void setOpenAccountButton(WebElement openAccountButton) {
-        this.openAccountButton = openAccountButton;
-    }
-
-    public WebElement getCustomersButton() {
-        return customersButton;
-    }
-
-    public void setCustomersButton(WebElement customersButton) {
-        this.customersButton = customersButton;
     }
 }
