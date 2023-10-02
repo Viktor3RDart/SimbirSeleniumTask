@@ -33,6 +33,8 @@ public class SearchClientDataTest extends BaseStep {
     @Step("Подготовка старта драйвера, переход на страницу")
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
+        // Данный аргумент добавлен для корректной работы CI gitHub Actions, при работе локально можно убрать,
+        // --headless позволяет прогонять тесты без запуска визуального окна Chrome
         options.addArguments("--headless");
         options.addArguments("--start-maximized");
         driver = new ChromeDriver(options);
@@ -66,8 +68,7 @@ public class SearchClientDataTest extends BaseStep {
         assertAll(() -> checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT));
         alertMessageClose(driver);
         clickElement(homePage.getOpenAccountButton());
-        waitElement(driver, accountPage.getProcessButton());
-        assertAll(() -> checkField(getActualPageUrl(driver), OPEN_ACCOUNT_PAGE_URL));
+        assertAll(() -> checkVisibility(accountPage.getCustomerNameField()));
         accountPage.openAccountForClient();
         assertAll(() -> checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT));
         alertMessageClose(driver);
@@ -95,8 +96,7 @@ public class SearchClientDataTest extends BaseStep {
         assertAll(() -> checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT));
         alertMessageClose(driver);
         clickElement(homePage.getOpenAccountButton());
-        waitElement(driver, accountPage.getProcessButton());
-        assertAll(() -> checkField(getActualPageUrl(driver), OPEN_ACCOUNT_PAGE_URL));
+        assertAll(() -> checkVisibility(accountPage.getCustomerNameField()));
         accountPage.openAccountForClient();
         assertAll(() -> checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT));
         alertMessageClose(driver);
@@ -124,8 +124,7 @@ public class SearchClientDataTest extends BaseStep {
         assertAll(() -> checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT));
         alertMessageClose(driver);
         clickElement(homePage.getOpenAccountButton());
-        waitElement(driver, accountPage.getProcessButton());
-        assertAll(() -> checkField(getActualPageUrl(driver), OPEN_ACCOUNT_PAGE_URL));
+        assertAll(() -> checkVisibility(accountPage.getCustomerNameField()));
         accountPage.openAccountForClient();
         assertAll(() -> checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT));
         alertMessageClose(driver);
@@ -153,8 +152,7 @@ public class SearchClientDataTest extends BaseStep {
         assertAll(() -> checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT));
         alertMessageClose(driver);
         clickElement(homePage.getOpenAccountButton());
-        waitElement(driver, accountPage.getProcessButton());
-        assertAll(() -> checkField(getActualPageUrl(driver), OPEN_ACCOUNT_PAGE_URL));
+        assertAll(() -> checkVisibility(accountPage.getCustomerNameField()));
         accountPage.openAccountForClient();
         assertAll(() -> checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT));
         alertMessageClose(driver);

@@ -30,6 +30,8 @@ public class MainPageTest extends BaseStep {
     @Step("Подготовка старта драйвера, переход на страницу")
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
+        // Данный аргумент добавлен для корректной работы CI gitHub Actions, при работе локально можно убрать,
+        // --headless позволяет прогонять тесты без запуска визуального окна Chrome
         options.addArguments("--headless");
         options.addArguments("--start-maximized");
         driver = new ChromeDriver(options);
