@@ -186,7 +186,8 @@ public class CreateClientTest extends BaseStep {
         assertAll(() -> checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT));
         alertMessageClose(driver);
         clickElement(homePage.getOpenAccountButton());
-        assertAll(() -> checkVisibility(accountPage.getCustomerNameField()));
+        waitElement(driver, accountPage.getProcessButton());
+        assertAll(() -> checkField(getActualPageUrl(driver), OPEN_ACCOUNT_PAGE_URL));
         accountPage.openAccountForClient();
         assertAll(() -> checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT));
         alertMessageClose(driver);

@@ -16,8 +16,7 @@ import pages.CustomersPage;
 import pages.OpenAccountPage;
 import pages.elements.HomePageButtons;
 
-import static helpers.Endpoints.BASIC_URL;
-import static helpers.Endpoints.CUSTOMER_PAGE_URL;
+import static helpers.Endpoints.*;
 import static helpers.TestData.*;
 import static helpers.Wait.waitElement;
 import static helpers.Wait.waitRunBeforeStart;
@@ -67,7 +66,8 @@ public class SearchClientDataTest extends BaseStep {
         assertAll(() -> checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT));
         alertMessageClose(driver);
         clickElement(homePage.getOpenAccountButton());
-        assertAll(() -> checkVisibility(accountPage.getCustomerNameField()));
+        waitElement(driver, accountPage.getProcessButton());
+        assertAll(() -> checkField(getActualPageUrl(driver), OPEN_ACCOUNT_PAGE_URL));
         accountPage.openAccountForClient();
         assertAll(() -> checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT));
         alertMessageClose(driver);
@@ -95,7 +95,8 @@ public class SearchClientDataTest extends BaseStep {
         assertAll(() -> checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT));
         alertMessageClose(driver);
         clickElement(homePage.getOpenAccountButton());
-        assertAll(() -> checkVisibility(accountPage.getCustomerNameField()));
+        waitElement(driver, accountPage.getProcessButton());
+        assertAll(() -> checkField(getActualPageUrl(driver), OPEN_ACCOUNT_PAGE_URL));
         accountPage.openAccountForClient();
         assertAll(() -> checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT));
         alertMessageClose(driver);
@@ -123,7 +124,8 @@ public class SearchClientDataTest extends BaseStep {
         assertAll(() -> checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT));
         alertMessageClose(driver);
         clickElement(homePage.getOpenAccountButton());
-        assertAll(() -> checkVisibility(accountPage.getCustomerNameField()));
+        waitElement(driver, accountPage.getProcessButton());
+        assertAll(() -> checkField(getActualPageUrl(driver), OPEN_ACCOUNT_PAGE_URL));
         accountPage.openAccountForClient();
         assertAll(() -> checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT));
         alertMessageClose(driver);
@@ -151,7 +153,8 @@ public class SearchClientDataTest extends BaseStep {
         assertAll(() -> checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT));
         alertMessageClose(driver);
         clickElement(homePage.getOpenAccountButton());
-        assertAll(() -> checkVisibility(accountPage.getCustomerNameField()));
+        waitElement(driver, accountPage.getProcessButton());
+        assertAll(() -> checkField(getActualPageUrl(driver), OPEN_ACCOUNT_PAGE_URL));
         accountPage.openAccountForClient();
         assertAll(() -> checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT));
         alertMessageClose(driver);
