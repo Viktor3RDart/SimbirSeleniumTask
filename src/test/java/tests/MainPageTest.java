@@ -56,7 +56,7 @@ public class MainPageTest extends BaseStep {
     @Description(value = "Клик по  кнопке — Add Customer  инициирует переход на вкладку:" +
             " https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager/addCust")
     @Severity(BLOCKER)
-    public void GoOnAddCustomerTest() {
+    public void goOnAddCustomerTest() {
         HomePageButtons homePage = new HomePageButtons(driver);
         AddCustomerPage customerPage = new AddCustomerPage(driver);
         clickElement(homePage.getAddCustomerButton());
@@ -70,7 +70,7 @@ public class MainPageTest extends BaseStep {
     @Description(value = "Клик по  кнопке —  Open Account  инициирует переход на вкладку:" +
             " https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager/openAccount")
     @Severity(BLOCKER)
-    public void GoOnOpenAccountTest() {
+    public void goOnOpenAccountTest() {
         HomePageButtons homePage = new HomePageButtons(driver);
         OpenAccountPage accountPage = new OpenAccountPage(driver);
         clickElement(homePage.getOpenAccountButton());
@@ -84,7 +84,7 @@ public class MainPageTest extends BaseStep {
     @Description(value = "Клик по  кнопке —  Customers  инициирует переход на вкладку:" +
             " https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager/list")
     @Severity(BLOCKER)
-    public void GoOnCustomersTest() {
+    public void goOnCustomersTest() {
         HomePageButtons homePage = new HomePageButtons(driver);
         CustomersPage customersPage = new CustomersPage(driver);
         clickElement(homePage.getCustomersButton());

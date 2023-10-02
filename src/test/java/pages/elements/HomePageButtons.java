@@ -16,7 +16,7 @@ public class HomePageButtons {
     private WebElement openAccountButton;
 
     @FindBy(xpath = "//div[2]//button[3]")
-    private WebElement CustomersButton;
+    private WebElement customersButton;
 
 
     public HomePageButtons(WebDriver driver) {
@@ -45,10 +45,10 @@ public class HomePageButtons {
     }
 
     public WebElement getCustomersButton() {
-        return CustomersButton;
+        return customersButton;
     }
 
     public void setCustomersButton(WebElement customersButton) {
-        CustomersButton = customersButton;
+        this.customersButton = customersButton;
     }
 }
