@@ -9,13 +9,13 @@ public class HomePageButtons {
 
     private final WebDriver driver;
 
-    @FindBy(xpath = "//div[2]//button[1]")
+    @FindBy(css = "button[ng-click=\"addCust()\"]")
     private WebElement addCustomerButton;
 
-    @FindBy(xpath = "//div[2]//button[2]")
+    @FindBy(css = "button[ng-click=\"openAccount()\"]")
     private WebElement openAccountButton;
 
-    @FindBy(xpath = "//div[2]//button[3]")
+    @FindBy(css = "button[ng-click=\"showCust()\"]")
     private WebElement customersButton;
 
 

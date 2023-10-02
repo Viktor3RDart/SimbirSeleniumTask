@@ -22,7 +22,7 @@ public class OpenAccountPage extends BaseStep {
     @FindBy(id = "currency")
     private WebElement currencyField;
 
-    @FindBy(xpath = "//form/button")
+    @FindBy(css = "button[type=\"submit\"]")
     private WebElement processButton;
 
     @FindBy(xpath = "//*[@id=\"userSelect\"]/option")

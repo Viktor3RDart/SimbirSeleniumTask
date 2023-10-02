@@ -13,22 +13,22 @@ public class CustomersPage extends BaseStep {
 
     private final WebDriver driver;
 
-    @FindBy(css = "td:nth-child(1)>a")
+    @FindBy(css = "a[ng-click=\"sortType = 'fName'; sortReverse = !sortReverse\"]")
     private WebElement firstNameTableTitle;
 
-    @FindBy(css = "td:nth-child(1)>a")
+    @FindBy(css = "a[ng-click=\"sortType = 'lName'; sortReverse = !sortReverse\"]")
     private WebElement lastNameTableTitle;
 
-    @FindBy(css = "td:nth-child(1)>a")
+    @FindBy(css = "a[ng-click=\"sortType = 'postCd'; sortReverse = !sortReverse\"]")
     private WebElement postCodeTableTitle;
 
-    @FindBy(xpath = "//thead//td[4]")
+    @FindBy(xpath = "//*[contains(text(), \"Account Number\")]")
     private WebElement accountNumberTableTitle;
 
-    @FindBy(xpath = "//thead//td[4]")
+    @FindBy(xpath = "//*[contains(text(), \"Delete Customer\")]")
     private WebElement deleteCustomerTableTitle;
 
-    @FindBy(css = "div>input")
+    @FindBy(css = "input[ng-model=\"searchCustomer\"] ")
     private WebElement searchCustomerField;
 
     @FindBy(css = "td:nth-child(1)")

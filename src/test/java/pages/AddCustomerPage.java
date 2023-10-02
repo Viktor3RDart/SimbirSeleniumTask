@@ -14,16 +14,16 @@ public class AddCustomerPage extends BaseStep {
 
     private final WebDriver driver;
 
-    @FindBy(css = "div:nth-child(1)>input")
+    @FindBy(css = "input[placeholder=\"First Name\"]")
     private WebElement firstNameField;
 
-    @FindBy(css = "div:nth-child(2)>input")
+    @FindBy(css = "input[placeholder=\"Last Name\"]")
     private WebElement lastNameField;
 
-    @FindBy(css = "div:nth-child(3)>input")
+    @FindBy(css = "input[placeholder=\"Post Code\"]")
     private WebElement postCodeField;
 
-    @FindBy(css = "form>button")
+    @FindBy(css = "button[type=\"submit\"]")
     private WebElement addCustomerButton;
 
     public AddCustomerPage(WebDriver driver) {
