@@ -40,13 +40,12 @@ public class OpenAccountPage extends BaseStep {
     @Step("Выбрать данные из дроп-дауна на экране Open Account")
     public void selectSomeDataInField(List<WebElement> list, String data) {
         HomePageButtons homePage = new HomePageButtons(driver);
-        for (WebElement element : list
-        ) {
-            if (element.getText().equals(data)) {
-                element.click();
-                homePage.openAccountButton.click();
-            }
-        }
+        list.stream()
+                .filter(element -> element.getText().equals(data))
+                .forEach(element -> {
+                    element.click();
+                    homePage.openAccountButton.click();
+                });
     }
 
     @Step("Добавить новый счет клиенту")

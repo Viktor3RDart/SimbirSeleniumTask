@@ -35,10 +35,7 @@ public class BaseStep {
     public void checkIsValueInList(List<WebElement> list, String testData) {
         ArrayList<String> texts = new ArrayList<>();
         String check = "null";
-        for (WebElement l : list
-        ) {
-            texts.add(l.getText());
-        }
+        list.forEach(element -> texts.add(element.getText()));
         for (String l : texts) {
             if (l.equals(testData)) {
                 check = l;
