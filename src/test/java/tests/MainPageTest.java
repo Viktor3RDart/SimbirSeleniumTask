@@ -1,0 +1,98 @@
+package tests;
+
+import helpers.BaseStep;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.Step;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import pages.AddCustomerPage;
+import pages.CustomersPage;
+import pages.OpenAccountPage;
+import pages.elements.HomePageButtons;
+
+import static helpers.Endpoints.*;
+import static helpers.Wait.*;
+import static io.qameta.allure.SeverityLevel.BLOCKER;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+@DisplayName("Тест-кейсы Экран Manager")
+public class MainPageTest extends BaseStep {
+
+    private WebDriver driver;
+
+    @BeforeEach
+    @Step("Подготовка старта драйвера, переход на страницу")
+    public void setUp() {
+        ChromeOptions options = new ChromeOptions();
+        // Данный аргумент добавлен для корректной работы CI gitHub Actions, при работе локально можно убрать,
+        // --headless позволяет прогонять тесты без запуска визуального окна Chrome
+        options.addArguments("--headless");
+        options.addArguments("--start-maximized");
+        driver = new ChromeDriver(options);
+        waitRunBeforeStart(driver, 3);
+        driver.get(BASIC_URL);
+    }
+
+    @Test
+    @DisplayName("Тест №01 - Отображение кнопок Экран Manager")
+    @Description(value = "Отображение кнопок — Add Customer, Open Account, Customers")
+    @Severity(BLOCKER)
+    public void buttonVisabilityTest() {
+        HomePageButtons homePage = new HomePageButtons(driver);
+        assertAll(
+                () -> checkVisibility(homePage.addCustomerButton),
+                () -> checkVisibility(homePage.openAccountButton),
+                () -> checkVisibility(homePage.customersButton));
+    }
+
+    @Test
+    @DisplayName("Тест №02 - Переход на вкладку: /addCust")
+    @Description(value = "Клик по  кнопке — Add Customer  инициирует переход на вкладку:" +
+            " https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager/addCust")
+    @Severity(BLOCKER)
+    public void goOnAddCustomerTest() {
+        HomePageButtons homePage = new HomePageButtons(driver);
+        AddCustomerPage customerPage = new AddCustomerPage(driver);
+        clickElement(homePage.addCustomerButton);
+        waitElement(driver, customerPage.firstNameField);
+        checkField(getActualPageUrl(driver), ADD_CUSTOMER_PAGE_URL);
+    }
+
+    @Test
+    @DisplayName("Тест №03 - Переход на вкладку: /openAccount")
+    @Description(value = "Клик по  кнопке —  Open Account  инициирует переход на вкладку:" +
+            " https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager/openAccount")
+    @Severity(BLOCKER)
+    public void goOnOpenAccountTest() {
+        HomePageButtons homePage = new HomePageButtons(driver);
+        OpenAccountPage accountPage = new OpenAccountPage(driver);
+        clickElement(homePage.openAccountButton);
+        waitElement(driver, accountPage.customerNameField);
+        checkField(getActualPageUrl(driver), OPEN_ACCOUNT_PAGE_URL);
+    }
+
+    @Test
+    @DisplayName("Тест №04 - Переход на вкладку: /list")
+    @Description(value = "Клик по  кнопке —  Customers  инициирует переход на вкладку:" +
+            " https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager/list")
+    @Severity(BLOCKER)
+    public void goOnCustomersTest() {
+        HomePageButtons homePage = new HomePageButtons(driver);
+        CustomersPage customersPage = new CustomersPage(driver);
+        clickElement(homePage.customersButton);
+        waitElement(driver, customersPage.firstNameTableTitle);
+        checkField(getActualPageUrl(driver), CUSTOMER_PAGE_URL);
+    }
+
+    @AfterEach
+    @Step("Закрыть драйвер")
+    public void tearDown() {
+        driver.quit();
+    }
+}

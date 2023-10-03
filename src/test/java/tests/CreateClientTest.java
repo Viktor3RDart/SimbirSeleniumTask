@@ -1,0 +1,223 @@
+package tests;
+
+import helpers.BaseStep;
+import org.openqa.selenium.chrome.ChromeOptions;
+import pages.AddCustomerPage;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.Step;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import pages.CustomersPage;
+import pages.OpenAccountPage;
+import pages.elements.HomePageButtons;
+
+import static helpers.Endpoints.*;
+import static helpers.TestData.*;
+import static helpers.Wait.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+import static io.qameta.allure.SeverityLevel.CRITICAL;
+
+@DisplayName(value = "Тест-кейсы Создание клиента")
+public class CreateClientTest extends BaseStep {
+
+    private WebDriver driver;
+
+    @BeforeEach
+    @Step("Подготовка старта драйвера, переход на страницу")
+    public void setUp() {
+        ChromeOptions options = new ChromeOptions();
+        // Данный аргумент добавлен для корректной работы CI gitHub Actions, при работе локально можно убрать,
+        // --headless позволяет прогонять тесты без запуска визуального окна Chrome
+        options.addArguments("--headless");
+        options.addArguments("--start-maximized");
+        driver = new ChromeDriver(options);
+        waitRunBeforeStart(driver, 3);
+        driver.get(BASIC_URL);
+    }
+
+    @Test
+    @DisplayName("Тест №05 - Отображение  3 полей  First Name, Last Name, Post Code")
+    @Description(value = "Отображение  3 полей  First Name, Last Name, Post Code на вкладке Add Customer")
+    @Severity(CRITICAL)
+    public void addCustomerFieldsVisabilityTest() {
+        AddCustomerPage customerPage = new AddCustomerPage(driver);
+        HomePageButtons homePage = new HomePageButtons(driver);
+        clickElement(homePage.addCustomerButton);
+        assertAll(
+                () -> checkVisibility(customerPage.firstNameField),
+                () -> checkVisibility(customerPage.lastNameField),
+                () -> checkVisibility(customerPage.postCodeField));
+    }
+
+    @Test
+    @DisplayName("Тест №06 - Отображение кнопки  Add Customer")
+    @Description(value = "Отображение   1 кнопки  Add Customer на вкладке Add Customer")
+    @Severity(CRITICAL)
+    public void addCustomerButtonVisabilityTest() {
+        AddCustomerPage customerPage = new AddCustomerPage(driver);
+        HomePageButtons homePage = new HomePageButtons(driver);
+        clickElement(homePage.addCustomerButton);
+        checkVisibility(customerPage.addCustomerButton);
+    }
+
+    @Test
+    @DisplayName("Тест №07 - Создание клиента без счета")
+    @Description(value = "Создание клиента без счета — все поля First Name, Last Name, Post Code  заполнены")
+    @Severity(CRITICAL)
+    public void createClientWithoutAccountTest() {
+        AddCustomerPage addCustomerPage = new AddCustomerPage(driver);
+        HomePageButtons homePage = new HomePageButtons(driver);
+        CustomersPage customersPage = new CustomersPage(driver);
+        clickElement(homePage.addCustomerButton);
+        addCustomerPage.createClient();
+        checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT);
+        alertMessageClose(driver);
+        clickElement(homePage.customersButton);
+        waitElement(driver, customersPage.firstNameTableTitle);
+        assertAll(
+                () -> checkField(getActualPageUrl(driver), CUSTOMER_PAGE_URL),
+                () -> checkIsValueInList(customersPage.firstNameList, FIRST_NAME),
+                () -> checkIsValueInList(customersPage.lastNameList, LAST_NAME),
+                () -> checkIsValueInList(customersPage.postCodeList, POST_CODE));
+    }
+
+    @Test
+    @DisplayName("Тест №08 - Создание клиента — поле First Name не заполнено")
+    @Description(value = "Создание клиента — поле First Name не заполнено, остальные поля заполнены")
+    @Severity(CRITICAL)
+    public void createClientWithoutFirstNameTest() {
+        AddCustomerPage addCustomerPage = new AddCustomerPage(driver);
+        HomePageButtons homePage = new HomePageButtons(driver);
+        CustomersPage customersPage = new CustomersPage(driver);
+        clickElement(homePage.addCustomerButton);
+        sendKeys(addCustomerPage.lastNameField, LAST_NAME);
+        sendKeys(addCustomerPage.postCodeField, POST_CODE);
+        clickElement(addCustomerPage.addCustomerButton);
+        checkField(alertMessageIsNotDisplayed(driver), CUSTOMER_PAGE_DO_NOT_HAVE_ALERT_MESSAGE);
+        clickElement(homePage.customersButton);
+        waitElement(driver, customersPage.firstNameTableTitle);
+        assertAll(
+                () -> checkField(getActualPageUrl(driver), CUSTOMER_PAGE_URL),
+                () -> checkIsValueInList(customersPage.lastNameList, NULL_TEST_DATA),
+                () -> checkIsValueInList(customersPage.postCodeList, NULL_TEST_DATA));
+    }
+
+    @Test
+    @DisplayName("Тест №09 - Создание клиента — поле Last Name не заполнено")
+    @Description(value = "Создание клиента — поле Last Name не заполнено, остальные поля заполнены")
+    @Severity(CRITICAL)
+    public void createClientWithoutLastNameTest() {
+        AddCustomerPage addCustomerPage = new AddCustomerPage(driver);
+        HomePageButtons homePage = new HomePageButtons(driver);
+        CustomersPage customersPage = new CustomersPage(driver);
+        clickElement(homePage.addCustomerButton);
+        sendKeys(addCustomerPage.firstNameField, FIRST_NAME);
+        sendKeys(addCustomerPage.postCodeField, POST_CODE);
+        clickElement(addCustomerPage.addCustomerButton);
+        checkField(alertMessageIsNotDisplayed(driver), CUSTOMER_PAGE_DO_NOT_HAVE_ALERT_MESSAGE);
+        clickElement(homePage.customersButton);
+        waitElement(driver, customersPage.firstNameTableTitle);
+        assertAll(
+                () -> checkField(getActualPageUrl(driver), CUSTOMER_PAGE_URL),
+                () -> checkIsValueInList(customersPage.firstNameList, NULL_TEST_DATA),
+                () -> checkIsValueInList(customersPage.postCodeList, NULL_TEST_DATA));
+    }
+
+    @Test
+    @DisplayName("Тест №10 - Создание клиента — поле Post Code не заполнено")
+    @Description(value = "Создание клиента — поле Post Code не заполнено, остальные поля заполнены")
+    @Severity(CRITICAL)
+    public void createClientWithoutPostCodeTest() {
+        AddCustomerPage addCustomerPage = new AddCustomerPage(driver);
+        HomePageButtons homePage = new HomePageButtons(driver);
+        CustomersPage customersPage = new CustomersPage(driver);
+        clickElement(homePage.addCustomerButton);
+        sendKeys(addCustomerPage.firstNameField, FIRST_NAME);
+        sendKeys(addCustomerPage.lastNameField, LAST_NAME);
+        clickElement(addCustomerPage.addCustomerButton);
+        checkField(alertMessageIsNotDisplayed(driver), CUSTOMER_PAGE_DO_NOT_HAVE_ALERT_MESSAGE);
+        clickElement(homePage.customersButton);
+        waitElement(driver, customersPage.firstNameTableTitle);
+        assertAll(
+                () -> checkField(getActualPageUrl(driver), CUSTOMER_PAGE_URL),
+                () -> checkIsValueInList(customersPage.firstNameList, NULL_TEST_DATA),
+                () -> checkIsValueInList(customersPage.lastNameList, NULL_TEST_DATA));
+    }
+
+    @Test
+    @DisplayName("Тест №11 - Отображение  2 полей   Customer, Currency")
+    @Description(value = "Отображение  2 полей   Customer, Currency  на вкладке Open Account")
+    @Severity(CRITICAL)
+    public void openAccountFieldsVisabilityTest() {
+        OpenAccountPage accountPage = new OpenAccountPage(driver);
+        HomePageButtons homePage = new HomePageButtons(driver);
+        clickElement(homePage.openAccountButton);
+        assertAll(
+                () -> checkVisibility(accountPage.currencyField),
+                () -> checkVisibility(accountPage.customerNameField));
+    }
+
+    @Test
+    @DisplayName("Тест №12 - Отображение   1 кнопки  Process")
+    @Description(value = "Отображение   1 кнопки  Process на вкладке Open Account")
+    @Severity(CRITICAL)
+    public void openAccountButtonVisabilityTest() {
+        OpenAccountPage accountPage = new OpenAccountPage(driver);
+        HomePageButtons homePage = new HomePageButtons(driver);
+        clickElement(homePage.openAccountButton);
+        checkVisibility(accountPage.processButton);
+    }
+
+    @Test
+    @DisplayName("Тест №13 - Создание клиента с счетом")
+    @Description(value = "Создание клиента с счетом — все поля First Name, Last Name, Post Code  заполнены")
+    @Severity(CRITICAL)
+    public void createClientWithAccountTest() {
+        AddCustomerPage addCustomerPage = new AddCustomerPage(driver);
+        HomePageButtons homePage = new HomePageButtons(driver);
+        CustomersPage customersPage = new CustomersPage(driver);
+        OpenAccountPage accountPage = new OpenAccountPage(driver);
+        clickElement(homePage.addCustomerButton);
+        addCustomerPage.createClient();
+        checkField(alertMessageText(driver), CUSTOMER_PAGE_GOOD_TRY_ALERT_MESSAGE_TEXT);
+        alertMessageClose(driver);
+        clickElement(homePage.openAccountButton);
+        checkVisibility(accountPage.customerNameField);
+        accountPage.openAccountForClient();
+        checkField(alertMessageText(driver), OPEN_ACCOUNT_ALERT_MESSAGE_TEXT);
+        alertMessageClose(driver);
+        clickElement(homePage.customersButton);
+        waitElement(driver, customersPage.firstNameTableTitle);
+        assertAll(
+                () -> checkField(getActualPageUrl(driver), CUSTOMER_PAGE_URL),
+                () -> checkIsValueInList(customersPage.firstNameList, FIRST_NAME),
+                () -> checkIsValueInList(customersPage.lastNameList, LAST_NAME),
+                () -> checkIsValueInList(customersPage.postCodeList, POST_CODE),
+                () -> checkIsValueInList(customersPage.accountNumberList, TEST_ACCOUNT));
+    }
+
+    @Test
+    @DisplayName("Тест №22 - Создание двух идентичных клиентов")
+    @Description(value = "Создание двух идентичных клиентов  — все поля First Name, Last Name, Post Code  совпадают")
+    @Severity(CRITICAL)
+    public void createIdenticalClientsTest() {
+        AddCustomerPage addCustomerPage = new AddCustomerPage(driver);
+        HomePageButtons homePage = new HomePageButtons(driver);
+        clickElement(homePage.addCustomerButton);
+        addCustomerPage.createClient();
+        addCustomerPage.createClient();
+        checkField(alertMessageText(driver), CUSTOMER_PAGE_DUPLICATES_ALERT_MESSAGE_TEXT);
+    }
+
+    @AfterEach
+    @Step("Закрыть драйвер")
+    public void tearDown() {
+        driver.quit();
+    }
+}
