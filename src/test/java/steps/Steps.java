@@ -1,7 +1,9 @@
 package steps;
-import static
+import io.restassured.specification.RequestSpecification;
 
 public class Steps {
 
-    protected final RequestSpecification requestSpecification
+    protected final RequestSpecification requestSpecification(){
+
+    }
 }
