@@ -67,8 +67,8 @@ public class Steps extends FullJson {
                 "test", "test");
         Statement stm = con.createStatement();
         // Удаление БД
-        stm.executeUpdate("DROP TABLE entities CASCADE");
-        stm.executeUpdate("DROP TABLE additions CASCADE");
+        stm.executeUpdate("DROP TABLE IF EXISTS entities CASCADE");
+        stm.executeUpdate("DROP TABLE IF EXISTS additions CASCADE");
         // Создание БД
         stm.executeUpdate("CREATE TABLE entities(" +
                 " id SERIAL PRIMARY KEY," +
