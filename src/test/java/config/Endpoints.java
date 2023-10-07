@@ -8,8 +8,7 @@ public class Endpoints {
 
     public static final String POST = BASIC_URL + "/api/create";
 
-    public static final String POST_GET_ALL = BASIC_URL + "/api/getAll";
-
+    public static final String GET_ALL = BASIC_URL + "/api/getAll";
 
     public static String useMethodWithId(String method, int id) {
         String url;
@@ -19,11 +18,7 @@ public class Endpoints {
             case "DELETE" -> url = BASIC_URL + "/api/delete/" + id;
             default -> throw new InvalidArgumentException("Вы ввели не допустимое наименование метода: "
                     + method + ", допустимые значения : GET, PATCH, DELETE");
-    }
+        }
         return url;
-}
-
-
-
-
+    }
 }
