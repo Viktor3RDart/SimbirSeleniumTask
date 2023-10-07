@@ -118,7 +118,7 @@ public class ApiTests extends Steps {
         // Обновляем сущность
         patchSomeWithValues(ADDITIONAL_INFO2, ADDITIONAL_NUMBER2, IMPORTANT_NUMBERS2, TITLE2, VERIFIED2, ID_SOME)
                 .statusCode(204);
-        // Проверяем методом GET с использованием ID что сущность была обновлена
+        // Проверяем методом GET с использованием ID из создания сущности, что сущность была обновлена
         RestAssured.given()
                 .baseUri(useMethodWithId("GET", ID_SOME))
                 .contentType(ContentType.JSON)

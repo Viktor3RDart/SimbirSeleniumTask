@@ -7,7 +7,6 @@ import io.qameta.allure.Step;
 
 import java.util.List;
 
-
 import static model.PostJson.TestDataJson.*;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
