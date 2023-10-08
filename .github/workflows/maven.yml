@@ -21,7 +21,7 @@ jobs:
         cache: maven
 
 
-    - name: Clone Viktor3RDart/Ci-cd PUBLIC repository
+#    - name: Clone Viktor3RDart/Ci-cd PUBLIC repository
     - uses: Viktor3RDart/Ci-cd@main
       with:
             owner: 'Viktor3RDart'
