@@ -26,7 +26,7 @@ jobs:
       with:
           owner: 'sun6r0'
           repository: 'test-service'
-    - run: docker-compose up --build -d
+#    - run: docker-compose up --build -d
 
 #    - uses: browser-actions/setup-chrome@latest
 #    - run: chrome --version
