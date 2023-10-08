@@ -21,12 +21,12 @@ jobs:
         cache: maven
 
 
-#    - name: Clone sun6r0/test-service PUBLIC repository
-    - uses: sun6r0/test-service@main
-#      with:
-#            owner: 'sun6r0'
-#            repository: 'test-service'
-#    - run: docker-compose up --build -d
+    - name: Clone Viktor3RDart/Ci-cd PUBLIC repository
+    - uses: Viktor3RDart/Ci-cd@main
+      with:
+            owner: 'Viktor3RDart'
+            repository: 'Ci-cd'
+    - run: docker-compose up --build -d
 
 #    - uses: browser-actions/setup-chrome@latest
 #    - run: chrome --version
