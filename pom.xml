@@ -10,10 +10,10 @@
         <java.version>11</java.version>
         <selenium.version>4.13.0</selenium.version>
         <rest-assured.version>5.3.0</rest-assured.version>
-        <junit.jupiter.version>5.9.2</junit.jupiter.version>
-        <junit.platform.version>1.9.2</junit.platform.version>
+        <junit.jupiter.version>5.8.0-M1</junit.jupiter.version>
+        <junit.platform.version>1.8.0-M1</junit.platform.version>
         <allure-maven.version>2.10.0</allure-maven.version>
-        <allure-junit5.version>2.21.0</allure-junit5.version>
+        <allure-junit5.version>2.14.0</allure-junit5.version>
         <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
