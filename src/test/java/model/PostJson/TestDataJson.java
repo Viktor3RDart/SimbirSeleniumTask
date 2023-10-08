@@ -15,8 +15,6 @@ public class TestDataJson {
 
     public static final boolean VERIFIED = true;
 
-    public static final int ID_SOME = 1;
-
     public static final String ADDITIONAL_INFO2 = "Какие то, такие то сведения";
 
     public static final int ADDITIONAL_NUMBER2 = 222;
@@ -26,7 +24,5 @@ public class TestDataJson {
     public static final String TITLE2 = "Титульник";
 
     public static final boolean VERIFIED2 = false;
-
-    public static final int ID_SOME2 = 2;
 
 }

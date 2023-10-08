@@ -7,9 +7,7 @@ import io.restassured.response.ValidatableResponse;
 import lombok.SneakyThrows;
 import model.PostJson.FullJson;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 
 import static config.Endpoints.*;

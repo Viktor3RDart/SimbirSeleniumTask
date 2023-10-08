@@ -1,9 +1,8 @@
 package tests;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.Step;
+import io.qameta.allure.*;
+
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;
@@ -17,9 +16,9 @@ import static model.PostJson.TestDataJson.*;
 @DisplayName("Тест-кейсы Api")
 public class ApiTests extends Steps {
 
-    @BeforeEach
+    @BeforeAll
     @Step("Подготовка тестового окружения, обнуление(удаление->создание) БД")
-    public void setUp() {
+    public static void setUp() {
         resetDB();
     }
 
@@ -28,23 +27,23 @@ public class ApiTests extends Steps {
     @Description(value = "Создать сущность методом POST - create")
     @Severity(BLOCKER)
     void createSomeTest() throws JsonProcessingException {
-        // Создаем сущность и проверяем
+        // Создаем сущность, проверяем код ответа.
         createSomeWithValues(ADDITIONAL_INFO, ADDITIONAL_NUMBER, IMPORTANT_NUMBERS, TITLE, VERIFIED)
                 .statusCode(200);
     }
 
     @Test
     @DisplayName("Тест №02 - Удаление сущности")
-    @Description(value = "Удалить сущность, проверить что сущность удалена методом DELETE - delete/{id}")
+    @Description(value = "Удалить сущность, методом DELETE - delete/{id}, проверить что сущность удалена")
     @Severity(BLOCKER)
     void deleteSomeTest() throws JsonProcessingException {
-        // Создаем сущность, проверяем код ответа
-        createSomeWithStaticTestData().statusCode(200);
+        // Создаем сущность, проверяем код ответа, берем id сущности
+        int entityId = Integer.parseInt(createSomeWithStaticTestData().statusCode(200).extract().asString());
         //Удаляем сущность
-        deleteSome(ID_SOME).statusCode(204);
+        deleteSome(entityId).statusCode(204);
         //Проверяем методом GET с использованием ID что сущность была удалена
         RestAssured.given()
-                .baseUri(useMethodWithId("GET", ID_SOME))
+                .baseUri(useMethodWithId("GET", entityId))
                 .contentType(ContentType.JSON)
                 .get()
                 .then()
@@ -56,11 +55,13 @@ public class ApiTests extends Steps {
     @Description(value = "Создать несколько сущностей, проверить получение сущностей методом GET - getAll")
     @Severity(CRITICAL)
     void getAllSomeTest() throws JsonProcessingException {
-        // Создаем сущности, проверяем код ответа
-        createSomeWithValues(ADDITIONAL_INFO, ADDITIONAL_NUMBER, IMPORTANT_NUMBERS, TITLE, VERIFIED)
-                .statusCode(200);
-        createSomeWithValues(ADDITIONAL_INFO2, ADDITIONAL_NUMBER2, IMPORTANT_NUMBERS2, TITLE2, VERIFIED2)
-                .statusCode(200);
+        //Подготовка тестового окружения, обнуление(удаление->создание) БД
+        resetDB();
+        // Создаем сущности, проверяем код ответа, берем id сущностей
+        int entityId = Integer.parseInt(createSomeWithValues(ADDITIONAL_INFO, ADDITIONAL_NUMBER, IMPORTANT_NUMBERS, TITLE, VERIFIED)
+                .statusCode(200).extract().asString());
+        int entityId2 = Integer.parseInt(createSomeWithValues(ADDITIONAL_INFO2, ADDITIONAL_NUMBER2, IMPORTANT_NUMBERS2, TITLE2, VERIFIED2)
+                .statusCode(200).extract().asString());
         //Проверяем метод getAll с использованием ID что сущности были созданы
         RestAssured.given()
                 .baseUri(GET_ALL)
@@ -72,13 +73,13 @@ public class ApiTests extends Steps {
                 //Проверяем первую сущность в массиве
                 .body("entity[0].addition.additional_info", Matchers.equalTo(ADDITIONAL_INFO))
                 .body("entity[0].addition.additional_number", Matchers.equalTo(ADDITIONAL_NUMBER))
-                .body("entity[0].id", Matchers.equalTo(ID_SOME))
+                .body("entity[0].id", Matchers.equalTo(entityId))
                 .body("entity[0].important_numbers", Matchers.equalTo(IMPORTANT_NUMBERS))
                 .body("entity[0].title", Matchers.equalTo(TITLE))
                 .body("entity[0].verified", Matchers.equalTo(VERIFIED))
                 .body("entity[1].addition.additional_info", Matchers.equalTo(ADDITIONAL_INFO2))
                 .body("entity[1].addition.additional_number", Matchers.equalTo(ADDITIONAL_NUMBER2))
-                .body("entity[1].id", Matchers.equalTo(ID_SOME2))
+                .body("entity[1].id", Matchers.equalTo(entityId2))
                 .body("entity[1].important_numbers", Matchers.equalTo(IMPORTANT_NUMBERS2))
                 .body("entity[1].title", Matchers.equalTo(TITLE2))
                 .body("entity[1].verified", Matchers.equalTo(VERIFIED2));
@@ -86,14 +87,14 @@ public class ApiTests extends Steps {
 
     @Test
     @DisplayName("Тест №04 - Получение сущности")
-    @Description(value = "Создать сущность, проверить получение сущности методом GET - get/{id}")
+    @Description(value = "Проверить получение сущности методом GET - get/{id}")
     @Severity(BLOCKER)
     void getSomeTest() throws JsonProcessingException {
-        // Создаем сущность, проверяем код ответа
-        createSomeWithStaticTestData().statusCode(200);
+        // Создаем сущность, проверяем код ответа, берем id сущности
+        int entityId = Integer.parseInt(createSomeWithStaticTestData().statusCode(200).extract().asString());
         //Проверяем методом GET с использованием ID что сущность была создана
         RestAssured.given()
-                .baseUri(useMethodWithId("GET", ID_SOME))
+                .baseUri(useMethodWithId("GET", entityId))
                 .contentType(ContentType.JSON)
                 .get()
                 .then()
@@ -101,7 +102,7 @@ public class ApiTests extends Steps {
                 .contentType(ContentType.JSON)
                 .body("addition.additional_info", Matchers.equalTo(ADDITIONAL_INFO))
                 .body("addition.additional_number", Matchers.equalTo(ADDITIONAL_NUMBER))
-                .body("id", Matchers.equalTo(ID_SOME))
+                .body("id", Matchers.equalTo(entityId))
                 .body("important_numbers", Matchers.equalTo(IMPORTANT_NUMBERS))
                 .body("title", Matchers.equalTo(TITLE))
                 .body("verified", Matchers.equalTo(VERIFIED));
@@ -112,15 +113,15 @@ public class ApiTests extends Steps {
     @Description(value = "Обновить созданную сущность методом PATCH - patch/{id}")
     @Severity(CRITICAL)
     void updateSomeTest() throws JsonProcessingException {
-        // Создаем сущность, проверяем код ответа
-        createSomeWithValues(ADDITIONAL_INFO, ADDITIONAL_NUMBER, IMPORTANT_NUMBERS, TITLE, VERIFIED)
-                .statusCode(200);
+        // Создаем сущность, проверяем код ответа, берем id сущности
+        int entityId = Integer.parseInt(createSomeWithValues(ADDITIONAL_INFO, ADDITIONAL_NUMBER, IMPORTANT_NUMBERS, TITLE, VERIFIED)
+                .statusCode(200).extract().asString());
         // Обновляем сущность
-        patchSomeWithValues(ADDITIONAL_INFO2, ADDITIONAL_NUMBER2, IMPORTANT_NUMBERS2, TITLE2, VERIFIED2, ID_SOME)
+        patchSomeWithValues(ADDITIONAL_INFO2, ADDITIONAL_NUMBER2, IMPORTANT_NUMBERS2, TITLE2, VERIFIED2, entityId)
                 .statusCode(204);
         // Проверяем методом GET с использованием ID из создания сущности, что сущность была обновлена
         RestAssured.given()
-                .baseUri(useMethodWithId("GET", ID_SOME))
+                .baseUri(useMethodWithId("GET", entityId))
                 .contentType(ContentType.JSON)
                 .get()
                 .then()
@@ -128,15 +129,15 @@ public class ApiTests extends Steps {
                 .contentType(ContentType.JSON)
                 .body("addition.additional_info", Matchers.equalTo(ADDITIONAL_INFO2))
                 .body("addition.additional_number", Matchers.equalTo(ADDITIONAL_NUMBER2))
-                .body("id", Matchers.equalTo(ID_SOME))
+                .body("id", Matchers.equalTo(entityId))
                 .body("important_numbers", Matchers.equalTo(IMPORTANT_NUMBERS2))
                 .body("title", Matchers.equalTo(TITLE2))
                 .body("verified", Matchers.equalTo(VERIFIED2));
     }
 
-    @AfterEach
+    @AfterAll
     @Step("Обнуление(удаление->создание) тестовой базы")
-    public void tearDown() {
+    public static void tearDown() {
         resetDB();
     }
 }
