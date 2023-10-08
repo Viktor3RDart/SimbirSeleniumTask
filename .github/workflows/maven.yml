@@ -20,9 +20,8 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-
-    - name: Clone sun6r0/test-service PUBLIC repository
     - uses: sun6r0/test-service@main
+    - name: Clone sun6r0/test-service PUBLIC repository
       with:
             owner: 'sun6r0'
             repository: 'test-service'
