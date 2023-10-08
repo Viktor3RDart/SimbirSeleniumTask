@@ -24,7 +24,7 @@ jobs:
     - name: Clone sun6r0/test-service PUBLIC repository
       uses: sun6r0/test-service@main
 
-    - run: make run
+    - run: docker-compose up --build -d
 
 
     - name: Run tests with Maven
