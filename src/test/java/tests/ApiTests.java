@@ -13,7 +13,8 @@ import static config.Endpoints.*;
 import static io.qameta.allure.SeverityLevel.*;
 import static model.PostJson.TestDataJson.*;
 
-@DisplayName("Тест-кейсы Api")
+@Epic("Позитивное тестирование сервиса API по созданию сущностей")
+@DisplayName("Тест-кейсы Api - POST, GET, PUT, DELETE, GET(getAll)")
 public class ApiTests extends Steps {
 
     @BeforeAll
