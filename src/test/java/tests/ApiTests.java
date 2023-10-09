@@ -5,7 +5,7 @@ import io.qameta.allure.*;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.hamcrest.Matchers;
+import model.PostJson.FullJson;
 import org.junit.jupiter.api.*;
 import steps.Steps;
 
@@ -13,6 +13,7 @@ import static config.DataBase.*;
 import static config.Endpoints.*;
 import static io.qameta.allure.SeverityLevel.*;
 import static model.PostJson.TestDataJson.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @Epic("Позитивное тестирование сервиса API - Entity, по созданию сущностей")
 @DisplayName("Тест-кейсы Api - POST, GET, PUT, DELETE, GET(getAll)")
@@ -60,31 +61,31 @@ public class ApiTests extends Steps {
         //Подготовка тестового окружения, обнуление(удаление->создание) БД
         resetDB(DB_LINK, DB_USER, DB_PASSWORD);
         // Создаем сущности, проверяем код ответа, берем id сущностей
-        int entityId = Integer.parseInt(createSomeWithValues(ADDITIONAL_INFO, ADDITIONAL_NUMBER, IMPORTANT_NUMBERS, TITLE, VERIFIED)
+        int entityId = Integer.parseInt(createSomeWithValues(ADDITIONAL_INFO, ADDITIONAL_NUMBER, IMPORTANT_NUMBERS,
+                TITLE, VERIFIED)
                 .statusCode(200).extract().asString());
-        int entityId2 = Integer.parseInt(createSomeWithValues(ADDITIONAL_INFO2, ADDITIONAL_NUMBER2, IMPORTANT_NUMBERS2, TITLE2, VERIFIED2)
+        int entityId2 = Integer.parseInt(createSomeWithValues(ADDITIONAL_INFO2, ADDITIONAL_NUMBER2, IMPORTANT_NUMBERS2,
+                TITLE2, VERIFIED2)
                 .statusCode(200).extract().asString());
         //Проверяем метод getAll с использованием ID что сущности были созданы
-        RestAssured.given()
+        FullJson jsonResponse = RestAssured.given()
                 .baseUri(GET_ALL)
                 .contentType(ContentType.JSON)
                 .get()
                 .then()
                 .statusCode(200)
                 .contentType(ContentType.JSON)
-                //Проверяем первую сущность в массиве
-                .body("entity[0].addition.additional_info", Matchers.equalTo(ADDITIONAL_INFO))
-                .body("entity[0].addition.additional_number", Matchers.equalTo(ADDITIONAL_NUMBER))
-                .body("entity[0].id", Matchers.equalTo(entityId))
-                .body("entity[0].important_numbers", Matchers.equalTo(IMPORTANT_NUMBERS))
-                .body("entity[0].title", Matchers.equalTo(TITLE))
-                .body("entity[0].verified", Matchers.equalTo(VERIFIED))
-                .body("entity[1].addition.additional_info", Matchers.equalTo(ADDITIONAL_INFO2))
-                .body("entity[1].addition.additional_number", Matchers.equalTo(ADDITIONAL_NUMBER2))
-                .body("entity[1].id", Matchers.equalTo(entityId2))
-                .body("entity[1].important_numbers", Matchers.equalTo(IMPORTANT_NUMBERS2))
-                .body("entity[1].title", Matchers.equalTo(TITLE2))
-                .body("entity[1].verified", Matchers.equalTo(VERIFIED2));
+                .extract().body().as(FullJson.class);
+        //Проверяем сущности в массиве
+        assertAll(
+                () -> Assertions.assertEquals(jsonForAssertionToString(ADDITIONAL_INFO, ADDITIONAL_NUMBER,
+                                IMPORTANT_NUMBERS, TITLE, VERIFIED, entityId),
+                        jsonEntityFromResponseToString(jsonResponse.getEntity().get(0)),
+                        "Данные в response не совпадают c ожидаемыми данными"),
+                () -> Assertions.assertEquals(jsonForAssertionToString(ADDITIONAL_INFO2, ADDITIONAL_NUMBER2,
+                                IMPORTANT_NUMBERS2, TITLE2, VERIFIED2, entityId2),
+                        jsonEntityFromResponseToString(jsonResponse.getEntity().get(1)),
+                        "Данные в response не совпадают c ожидаемыми данными"));
     }
 
     @Test
@@ -95,19 +96,17 @@ public class ApiTests extends Steps {
         // Создаем сущность, проверяем код ответа, берем id сущности
         int entityId = Integer.parseInt(createSomeWithStaticTestData().statusCode(200).extract().asString());
         //Проверяем методом GET с использованием ID что сущность была создана
-        RestAssured.given()
+        FullJson jsonResponse = RestAssured.given()
                 .baseUri(useMethodWithId("GET", entityId))
                 .contentType(ContentType.JSON)
                 .get()
                 .then()
                 .statusCode(200)
                 .contentType(ContentType.JSON)
-                .body("addition.additional_info", Matchers.equalTo(ADDITIONAL_INFO))
-                .body("addition.additional_number", Matchers.equalTo(ADDITIONAL_NUMBER))
-                .body("id", Matchers.equalTo(entityId))
-                .body("important_numbers", Matchers.equalTo(IMPORTANT_NUMBERS))
-                .body("title", Matchers.equalTo(TITLE))
-                .body("verified", Matchers.equalTo(VERIFIED));
+                .extract().body().as(FullJson.class);
+        Assertions.assertEquals(jsonForAssertionToString(ADDITIONAL_INFO, ADDITIONAL_NUMBER, IMPORTANT_NUMBERS,
+                        TITLE, VERIFIED, entityId), jsonFromResponseToString(jsonResponse),
+                "Данные в response не совпадают c ожидаемыми данными");
     }
 
     @Test
@@ -116,25 +115,24 @@ public class ApiTests extends Steps {
     @Severity(CRITICAL)
     void updateSomeTest() throws JsonProcessingException {
         // Создаем сущность, проверяем код ответа, берем id сущности
-        int entityId = Integer.parseInt(createSomeWithValues(ADDITIONAL_INFO, ADDITIONAL_NUMBER, IMPORTANT_NUMBERS, TITLE, VERIFIED)
+        int entityId = Integer.parseInt(createSomeWithValues(ADDITIONAL_INFO, ADDITIONAL_NUMBER, IMPORTANT_NUMBERS,
+                TITLE, VERIFIED)
                 .statusCode(200).extract().asString());
         // Обновляем сущность
         patchSomeWithValues(ADDITIONAL_INFO2, ADDITIONAL_NUMBER2, IMPORTANT_NUMBERS2, TITLE2, VERIFIED2, entityId)
                 .statusCode(204);
         // Проверяем методом GET с использованием ID из создания сущности, что сущность была обновлена
-        RestAssured.given()
+        FullJson jsonResponse = RestAssured.given()
                 .baseUri(useMethodWithId("GET", entityId))
                 .contentType(ContentType.JSON)
                 .get()
                 .then()
                 .statusCode(200)
                 .contentType(ContentType.JSON)
-                .body("addition.additional_info", Matchers.equalTo(ADDITIONAL_INFO2))
-                .body("addition.additional_number", Matchers.equalTo(ADDITIONAL_NUMBER2))
-                .body("id", Matchers.equalTo(entityId))
-                .body("important_numbers", Matchers.equalTo(IMPORTANT_NUMBERS2))
-                .body("title", Matchers.equalTo(TITLE2))
-                .body("verified", Matchers.equalTo(VERIFIED2));
+                .extract().body().as(FullJson.class);
+        Assertions.assertEquals(jsonForAssertionToString(ADDITIONAL_INFO2, ADDITIONAL_NUMBER2, IMPORTANT_NUMBERS2,
+                        TITLE2, VERIFIED2, entityId), jsonFromResponseToString(jsonResponse),
+                "Данные в response не совпадают c ожидаемыми данными");
     }
 
     @AfterAll

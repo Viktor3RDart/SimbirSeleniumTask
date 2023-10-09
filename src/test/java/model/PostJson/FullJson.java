@@ -27,6 +27,10 @@ public class FullJson {
     private String title;
     @JsonProperty("verified")
     private Boolean verified;
+    @JsonProperty("id")
+    private Integer id;
+    @JsonProperty("entity")
+    private List<Entity> entity;
 
 
     @JsonProperty("addition")
@@ -69,7 +73,21 @@ public class FullJson {
         this.verified = verified;
     }
 
+    @JsonProperty("entity")
+    public List<Entity> getEntity() {
+        return entity;
+    }
+
+    @JsonProperty("entity")
+    public void setEntity(List<Entity> entity) {
+        this.entity = entity;
+    }
+
     public FullJson() {
+    }
+
+    public FullJson(List<Entity> entity) {
+        this.entity = entity;
     }
 
     public FullJson(String additionalInfo, Integer additionalNumber, List<Integer> importantNumbers, String title,
@@ -78,6 +96,15 @@ public class FullJson {
         this.importantNumbers = importantNumbers;
         this.title = title;
         this.verified = verified;
+    }
+
+    public FullJson(String additionalInfo, Integer additionalNumber, List<Integer> importantNumbers, String title,
+                    Boolean verified, Integer id) {
+        this.addition = new Addition(additionalInfo, additionalNumber, id);
+        this.importantNumbers = importantNumbers;
+        this.title = title;
+        this.verified = verified;
+        this.id = id;
     }
 
     @Step("Создать статическое Body-Json для метода POST")
@@ -94,6 +121,30 @@ public class FullJson {
         ObjectMapper objectMapper = new ObjectMapper();
         FullJson data = new FullJson(additionalInfo, additionalNumber, importantNumbers, title, verified);
         return objectMapper.writeValueAsString(data);
+    }
+
+    @Step("Смапить Json с тестовыми данными в строку для проверки")
+    public static String jsonForAssertionToString(String additionalInfo, Integer additionalNumber,
+                                                  List<Integer> importantNumbers, String title, Boolean verified,
+                                                  Integer id)
+            throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        FullJson data = new FullJson(additionalInfo, additionalNumber, importantNumbers, title, verified, id);
+        return objectMapper.writeValueAsString(data);
+    }
+
+    @Step("Смапить из response Json в строку для проверки")
+    public static String jsonFromResponseToString(FullJson json)
+            throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(json);
+    }
+
+    @Step("Смапить из response Entity(getAll) Json в строку для проверки")
+    public static String jsonEntityFromResponseToString(Entity json)
+            throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(json);
     }
 }
 
