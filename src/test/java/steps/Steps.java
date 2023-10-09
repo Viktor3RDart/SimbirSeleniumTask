@@ -4,10 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
-import lombok.SneakyThrows;
 import model.PostJson.FullJson;
 
-import java.sql.*;
 import java.util.List;
 
 import static config.Endpoints.*;
@@ -56,30 +54,6 @@ public class Steps extends FullJson {
                 .contentType(ContentType.JSON)
                 .delete()
                 .then();
-    }
-
-    @SneakyThrows
-    @Step("Сброс базы данных")
-    public static void resetDB() {
-        Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/test",
-                "test", "test");
-        Statement stm = con.createStatement();
-        // Удаление БД
-        stm.executeUpdate("DROP TABLE IF EXISTS entities CASCADE");
-        stm.executeUpdate("DROP TABLE IF EXISTS additions CASCADE");
-        // Создание БД
-        stm.executeUpdate("CREATE TABLE entities(" +
-                " id SERIAL PRIMARY KEY," +
-                " title VARCHAR(255) NOT NULL," +
-                " verified BOOLEAN NOT NULL," +
-                " important_numbers integer[]," +
-                " addition_id SERIAL UNIQUE)");
-        stm.executeUpdate("CREATE TABLE additions(" +
-                " id INTEGER PRIMARY KEY NOT NULL," +
-                " additional_info VARCHAR(255)," +
-                " additional_number integer," +
-                " FOREIGN KEY (id) REFERENCES entities (addition_id) ON DELETE CASCADE)");
-        con.close();
     }
 }
 

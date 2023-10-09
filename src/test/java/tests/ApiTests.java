@@ -9,18 +9,19 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.*;
 import steps.Steps;
 
+import static config.DataBase.*;
 import static config.Endpoints.*;
 import static io.qameta.allure.SeverityLevel.*;
 import static model.PostJson.TestDataJson.*;
 
-@Epic("Позитивное тестирование сервиса API по созданию сущностей")
+@Epic("Позитивное тестирование сервиса API - Entity, по созданию сущностей")
 @DisplayName("Тест-кейсы Api - POST, GET, PUT, DELETE, GET(getAll)")
 public class ApiTests extends Steps {
 
     @BeforeAll
     @Step("Подготовка тестового окружения, обнуление(удаление->создание) БД")
     public static void setUp() {
-        resetDB();
+        resetDB(DB_LINK, DB_USER, DB_PASSWORD);
     }
 
     @Test
@@ -57,7 +58,7 @@ public class ApiTests extends Steps {
     @Severity(CRITICAL)
     void getAllSomeTest() throws JsonProcessingException {
         //Подготовка тестового окружения, обнуление(удаление->создание) БД
-        resetDB();
+        resetDB(DB_LINK, DB_USER, DB_PASSWORD);
         // Создаем сущности, проверяем код ответа, берем id сущностей
         int entityId = Integer.parseInt(createSomeWithValues(ADDITIONAL_INFO, ADDITIONAL_NUMBER, IMPORTANT_NUMBERS, TITLE, VERIFIED)
                 .statusCode(200).extract().asString());
@@ -139,6 +140,6 @@ public class ApiTests extends Steps {
     @AfterAll
     @Step("Обнуление(удаление->создание) тестовой базы")
     public static void tearDown() {
-        resetDB();
+        resetDB(DB_LINK, DB_USER, DB_PASSWORD);
     }
 }
